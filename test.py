@@ -36,7 +36,7 @@ header = {
 	'content-type': 'application/json;charset=UTF-8',
 	'accept': '*/*',
 	'accept-language': 'zh-cn',
-	'accesstoken': 'RJI37QNDMKCBQA2P4RUK6XTZY7R4LSS5US4BHPP2PN755Q276TYA113528c',
+	'accesstoken': 'E27TIGFHKNO4T2QH4DUDTIYQ47P4CI3DWW6OCOPACIZWOE57UBRA113528c',
 	'accept-Encoding': 'br,gzip,deflate',
 	'cache-control': 'no-cache',
 	'content-Length': '274',
@@ -46,17 +46,17 @@ header = {
 	'code-version':'[object Undefined]',
 	'xcx-version':'3.19.83'
 }
-
-url_A = 'https://api.pinduoduo.com/api/ktt_order_core/customer/ordering/query_base_info_on_order_page?xcx_version=3.19.83'
-
 session = requests.session()
 
-# A
-response = session.post(url=url_A, json=PARAMS_MASK, headers=header, verify = False)
-data = response.json()
-
-print(data)
-print("done")
+#url_A = 'https://api.pinduoduo.com/api/ktt_order_core/customer/ordering/query_base_info_on_order_page?xcx_version=3.19.83'
+#
+#
+## A
+#response = session.post(url=url_A, json=PARAMS_MASK, headers=header, verify = False)
+#data = response.json()
+#
+#print(data)
+#print("done")
 
 # A
 pay_url_A = 'https://api.pinduoduo.com/api/collection_activity/order/generate_biz_order_no_v3?xcx_version=3.19.83'
@@ -93,16 +93,15 @@ print("done")
 
 # B2 支付
 
-pay_url_B = 'https://api.pinduoduo.com/order/prepay?xcx_version=3.19.83&pay_app_id=128&order_sn=210123-295424000662898&parent_order_sn=210123-295424000662898&version=3'
+pay_url_B = 'https://api.pinduoduo.com/order/prepay'
 PAY_B2['order_sn']= orderSn
 
-time.sleep(3)
 print(PAY_B2)
 print("===")
 response = session.post(url=pay_url_B, params=PAY_B2, json = {} ,headers=header, verify = False)
 data = response.json()
 
-if data['success']:
+if 'package' in data:
 	prepay_id = data['package'].split("=")[1]
 
 print(data)
@@ -121,7 +120,4 @@ response = session.post(url=pay_url_C, json=PAY_C, headers=header, verify = Fals
 data = response.json()
 
 if data['success']:
-	#"orderSn": "210123-295424000662898",
-	#"bizOrderNo": "5f362fe37733165fd3c3ad8a01ed81f6",
-	orderSn = data['result']['orderSn']
-	bizOrderNo = data['result']['bizOrderNo']
+	print("ok done")
